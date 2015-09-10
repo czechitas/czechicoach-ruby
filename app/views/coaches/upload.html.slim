@@ -1,0 +1,13 @@
+h1 Upload coaches from CSV file
+.well
+  p Please upload only CSV files with the following order of columns:
+  ol
+    li name
+    li email
+    li city
+    li company
+    li skills
+
+= form_tag upload_coaches_path, multipart: true do
+  = file_field_tag :file
+  = submit_tag "Import"

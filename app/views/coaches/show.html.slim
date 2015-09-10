@@ -1,0 +1,30 @@
+.page-header
+  = link_to coaches_path, class: 'btn btn-default' do 
+    span.glyphicon.glyphicon-list-alt
+    |  Back 
+  = link_to edit_coach_path(@coach), class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-pencil
+    |  Edit 
+  h1
+    | Show coach
+dl.dl-horizontal
+  dt
+    | Name:
+  dd
+    = @coach.name
+  dt
+    | City:
+  dd
+    = @coach.city
+  dt
+    | Email:
+  dd
+    = @coach.email
+  dt
+    | Company:
+  dd
+    = @coach.company
+  dt
+    | Skills:
+  dd
+    = @coach.skills.map { |s| s.name }.join(", ")

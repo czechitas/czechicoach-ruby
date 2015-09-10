@@ -1,0 +1,12 @@
+= simple_form_for(@coach) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :city
+    = f.input :email
+    = f.input :company
+    = f.association :skills
+
+  .form-actions
+    = f.button :submit

@@ -1,0 +1,43 @@
+.page-header
+  = link_to new_coach_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    |  New Coach
+  h1
+    | Listing coaches
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover
+    thead
+      tr
+        th
+          | Name
+        th
+          | City
+        th
+          | Email
+        th 
+          | Company
+        th
+          | Skills
+        th
+        th
+        th
+    tbody
+      - @coaches.each do | coach |
+        tr
+          td
+            = coach.name
+          td
+            = coach.city
+          td
+            = coach.email
+          td
+            = coach.company
+          td
+            = coach.skills.map { |s| s.name }.join(", ")
+          td
+            = link_to 'Show', coach
+          td
+            = link_to 'Edit', edit_coach_path(coach) 
+          td
+            = link_to 'Destroy', coach, method: :delete, data: { confirm: 'Are you sure?' } 
