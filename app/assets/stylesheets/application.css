@@ -17,3 +17,7 @@
 a.btn-primary {
   color: white;
 }
+
+.filters button {
+  margin-right: 10px;
+}

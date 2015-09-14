@@ -1,9 +1,32 @@
+
 .page-header
   = link_to new_coach_path, class: 'btn btn-primary' do 
     span.glyphicon.glyphicon-plus
     |  New Coach
   h1
     | Listing coaches
+  .row
+    .col-md-4.filters.well
+      h5 City filter:
+      = link_to coaches_path(city_filter: "Praha") do
+        button.btn.btn-success Praha
+      = link_to coaches_path(city_filter: "Brno") do
+        button.btn.btn-success Brno
+      = link_to coaches_path(city_filter: "Others") do
+        button.btn.btn-success Other cities
+      = link_to coaches_path(city_filter: "") do
+        button.btn.btn-success All
+
+    .col-md-5.col-md-offset-1.filters.well
+      h5 Skill filter:
+      = link_to coaches_path(skill_filter: "Web") do
+        button.btn.btn-info Web
+      = link_to coaches_path(skill_filter: "Programming") do
+        button.btn.btn-info Programming
+      = link_to coaches_path(skill_filter: "Graphics") do
+        button.btn.btn-info Graphicss
+      = link_to coaches_path(skill_filter: "") do
+        button.btn.btn-info All
 
 .table-responsive
   table.table.table-striped.table-bordered.table-hover

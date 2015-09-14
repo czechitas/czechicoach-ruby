@@ -5,6 +5,17 @@ class CoachesController < ApplicationController
   # GET /coaches.json
   def index
     @coaches = Coach.all
+    if filter = params[:city_filter]
+      @coaches = Coach.praha if filter == "Praha"
+      @coaches = Coach.brno if filter == "Brno"
+      @coaches = Coach.others if filter == "Others"
+    end
+
+    if filter = params[:skill_filter]
+      @coaches = @coaches.web if filter == "Web"
+      @coaches = @coaches.programming if filter == "Programming"
+      @coaches = @coaches.graphics if filter == "Graphics"
+    end
   end
 
   # GET /coaches/1

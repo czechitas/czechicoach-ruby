@@ -2,6 +2,19 @@ class Coach < ActiveRecord::Base
   has_and_belongs_to_many :skills
   validates :email, presence: true, uniqueness: true
 
+  scope :praha, -> { where(city: "Praha") }
+  scope :brno, -> { where(city: "Brno") }
+  scope :others, -> { where.not(city: ["Praha", "Brno"]) }
+
+  scope :web, -> { select { |c| !c.skills
+                                 .where(name: ["web","js", "jquery","html/css","fe", "frontend", "html", "css", "php", "wordpress"]).blank?}}
+
+  scope :programming, -> { select { |c| !c.skills
+                                          .where(name: ["ruby", "java", "c", "c#", "php", "python", "android", "ios", "rails" ,"django", "oop", "c/c++"]).blank?}}
+
+  scope :graphics, -> { select { |c| !c.skills
+                                       .where(name: ["grafika", "photoshop", "adobe", "vizualizace", "gimp", "inskcape"]).blank? }}
+
   def self.import_from_csv(file)
     CSV.foreach(file.path, headers: true) do |row|
       name = row.field(0).try(:strip)
