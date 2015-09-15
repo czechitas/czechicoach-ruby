@@ -6,14 +6,30 @@ class Coach < ActiveRecord::Base
   scope :brno, -> { where(city: "Brno") }
   scope :others, -> { where.not(city: ["Praha", "Brno"]) }
 
-  scope :web, -> { select { |c| !c.skills
-                                 .where(name: ["web","js", "jquery","html/css","fe", "frontend", "html", "css", "php", "wordpress"]).blank?}}
 
-  scope :programming, -> { select { |c| !c.skills
-                                          .where(name: ["ruby", "java", "c", "c#", "php", "python", "android", "ios", "rails" ,"django", "oop", "c/c++"]).blank?}}
+  WEB_SKILLS = ["web","js", "jquery","html/css","fe", "frontend", "html", "css", "php", "wordpress"]
+  PRG_SKILLS = ["ruby", "java", "c", "c#", "php", "python", "android", "ios", "rails" ,"django", "oop", "c/c++"]
+  GRAPHICS_SKILLS = ["grafika", "photoshop", "adobe", "vizualizace", "gimp", "inskcape"]
 
-  scope :graphics, -> { select { |c| !c.skills
-                                       .where(name: ["grafika", "photoshop", "adobe", "vizualizace", "gimp", "inskcape"]).blank? }}
+  FILTERS = [
+    [:web, WEB_SKILLS],
+    [:programming, PRG_SKILLS],
+    [:graphics, GRAPHICS_SKILLS]
+  ]
+
+  FILTERS.each do |what|
+    define_singleton_method what[0] do |scope|
+      ids = Skill.where(name: what[1])
+                 .select("id")
+                 .map(&:id)
+
+      coach_ids = CoachSkill.where(skill_id: ids)
+                            .select("coach_id")
+                            .map(&:coach_id)
+
+      Coach.where(id: coach_ids)
+    end
+  end
 
   def self.import_from_csv(file)
     CSV.foreach(file.path, headers: true) do |row|

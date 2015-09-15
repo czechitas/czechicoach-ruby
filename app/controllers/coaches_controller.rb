@@ -5,16 +5,21 @@ class CoachesController < ApplicationController
   # GET /coaches.json
   def index
     @coaches = Coach.all
-    if filter = params[:city_filter]
-      @coaches = Coach.praha if filter == "Praha"
-      @coaches = Coach.brno if filter == "Brno"
-      @coaches = Coach.others if filter == "Others"
+
+    if filter = params[:skill_filter].presence
+      @coaches = Coach.web(@coaches) if filter == "Web"
+      @coaches = Coach.programming(@coaches) if filter == "Programming"
+      @coaches = Coach.graphics(@coaches) if filter == "Graphics"
     end
 
-    if filter = params[:skill_filter]
-      @coaches = @coaches.web if filter == "Web"
-      @coaches = @coaches.programming if filter == "Programming"
-      @coaches = @coaches.graphics if filter == "Graphics"
+    if filter = params[:city_filter].presence
+      @coaches = @coaches.praha if filter == "Praha"
+      @coaches = @coaches.brno if filter == "Brno"
+      @coaches = @coaches.others if filter == "Others"
+    end
+
+    if query = params[:query].presence
+      @coaches = @coaches.where("name ILIKE ? OR email ILIKE ? OR company ILIKE ?", "%#{params[:query]}%", "%#{params[:query]}%", "%#{params[:query]}%") 
     end
   end
 

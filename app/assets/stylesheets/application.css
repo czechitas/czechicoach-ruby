@@ -14,10 +14,14 @@
  *= require_self
  */
 
-a.btn-primary {
+.filters .btn, .page-header .btn {
   color: white;
 }
 
 .filters button {
   margin-right: 10px;
+}
+
+.filters a {
+  margin-bottom: 3px;
 }
