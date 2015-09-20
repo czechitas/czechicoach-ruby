@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     collection do
       get :upload
       post :upload
+      get :export
     end
   end
   root 'coaches#index'

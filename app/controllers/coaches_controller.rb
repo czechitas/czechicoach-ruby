@@ -85,6 +85,10 @@ class CoachesController < ApplicationController
     end
   end
 
+  def export
+    send_file Coach.export_all
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_coach

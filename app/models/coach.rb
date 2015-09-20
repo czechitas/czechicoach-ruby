@@ -31,6 +31,10 @@ class Coach < ActiveRecord::Base
     end
   end
 
+  def skill_names
+    skills.map(&:name).join(", ")
+  end
+
   def self.import_from_csv(file)
     CSV.foreach(file.path, headers: true) do |row|
       name = row.field(0).try(:strip)
@@ -57,5 +61,15 @@ class Coach < ActiveRecord::Base
 
       coach.save!
     end
+  end
+
+  def self.export_all
+    t = Tempfile.new(["coaches", ".csv"])
+    CSV.open(t.path, "w") do |csv|
+      Coach.all.each do |coach|
+        csv << [coach.name, coach.email, coach.city, coach.company, coach.skill_names]
+      end
+    end
+    t.path
   end
 end

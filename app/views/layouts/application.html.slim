@@ -36,6 +36,9 @@ html
             li
               a href="/coaches/upload"
                 | Upload from file
+            li
+              a href="/coaches/export"
+                | Export a backup
     .container
       - flash.each do |name, msg|
         = content_tag :div, class: "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable", role: "alert" do
